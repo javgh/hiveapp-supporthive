@@ -1,6 +1,7 @@
 var hiveInfo;
 var defaultAmountSatoshi = 5000000;
-var donationAddress = '142m1MpXHhymF4aASiWwYohe1Y55v5BQwc';
+var donationAddressMainnet = '142m1MpXHhymF4aASiWwYohe1Y55v5BQwc';
+var donationAddressTestnet = 'my3xStz6Tnf3kkuLcnfwT2Cev2aAmUV3rw';
 
 var init = function() {
   $('.headText2').hide();
@@ -15,8 +16,12 @@ var init = function() {
 
 var send = function() {
   var userAmountSatoshi = bitcoin.satoshiFromUserString($('#in_cash').val());
-  if (userAmountSatoshi > 0){
+  var donationAddress = hiveInfo.onTestnet ? donationAddressTestnet
+                                                : donationAddressMainnet;
+  if (userAmountSatoshi > 0) {
       bitcoin.sendMoney(donationAddress, userAmountSatoshi, runAnimations);
+  } else {
+      bitcoin.sendMoney(donationAddress, null, runAnimations);
   }
 }
 
